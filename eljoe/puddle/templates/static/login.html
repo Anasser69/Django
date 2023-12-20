@@ -1,0 +1,46 @@
+{% extends 'static/base.html' %}
+
+
+{% block title %}
+    Login
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class=" rounded fs-6 p-3" style="width: 25%; background-color: #dbffff; margin: 10px auto;">
+        <h1 class="mt-1 text-center">Login</h1>
+        <form action="." method="POST">
+            {% csrf_token %}
+                
+            {{ form.non_field_errors }}
+
+            <div class="m-2">
+                <label class="mr-2" for="">Username: </label>
+                
+                {{ form.username }}
+            </div>
+
+            <div class="m-2">
+                <label class="mr-2" for="">Password: </label>
+
+                {{ form.password }}
+            </div>
+
+            
+            {% if from.errors or form.non_feild_errors %}
+                <div class="rounded">
+                    {% for field in from %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+                
+            
+            <button class="btn btn-info rounded" type="submit" style="margin: auto;">Submit</button>
+        </form>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,60 @@
+{% extends 'static/base.html' %}
+
+
+{% block title %}
+    {{ item.name }}
+{% endblock title %}
+    
+
+
+{% block content %}
+    <div class="grid-2 p-4">
+        <div class="img text-center">
+            <img src="{{ item.image.url }}" class="rounded" style="max-width: 100%;" alt="">
+        </div>
+        <div class="content rounded p-2" style="background-color: #ebffff;">
+            <h2 class="mb-4">{{ item.name }}</h2>
+            <p class="m-1 text-body-tertiary"><strong class="text-body-secondary">Price: </strong>{{ item.price }}</p>
+            <p class="m-1 text-body-tertiary"><strong class="text-body-secondary">Seller: </strong>{{ item.created_by.username }}</p>
+            <p class="m-1 text-body-secondary"><strong class="">Description: </strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description }}</p>
+            
+            {% if request.user == item.created_by %}
+                <div class="bg-white p-3 rounded">
+                    <p class="">This is Your Item <span class="text-body-secondary">so U can edit ,or delete it</span></p>
+                    <a href="{% url 'item:edit' item.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'item:delete' item.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            {% endif %}
+                 
+            <a href="{% url 'conversation:new' item.id %}" class="btn btn-primary mt-4">Contact Seller</a>
+        </div>
+    </div>
+
+    
+    {% if related_items %}
+        <div class="rounded" style=" background-color: #ebffff;">
+            
+            <h2 class="text-center p-4">Related Items</h2>
+            <div class="grid p-3" style="max-width: 100%;">
+                
+                {% for item in related_items %}
+                <div class="bg-secondary p-0 rounded">
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div class="img" style="width: 100%">
+                            <img class="rounded" style="max-width:100%" src="{{ item.image.url }}" alt="">                  
+                        </div>
+                    </a>
+                    
+                    <div class="p-3">
+                        <h2 class="text-capitalize">{{ item.name }}</h2>
+                        <p>Price: {{ item.price }}</p>
+                    </div>
+                    
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}
+    

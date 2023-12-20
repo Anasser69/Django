@@ -1,0 +1,37 @@
+{% extends 'static/base.html' %}
+
+
+{% block title %}
+    New Conversation
+{% endblock title %}
+    
+
+
+{% block content %}
+
+    <div class=" rounded fs-6 p-3" style="width: 25%; background-color: #dbffff; margin: 10px auto;">
+        <h1>New Conversation</h1>
+        <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div>
+                {{ form.as_p}}
+            </div>
+
+            {% if from.errors or form.non_feild_errors %}
+                <div class="rounded">
+                    {% for field in from %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button class="btn btn-info rounded" type="submit" style="margin: auto;">Submit</button>
+
+        </form>
+    </div>
+    
+{% endblock content %}
+    
